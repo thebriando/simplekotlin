@@ -6,7 +6,7 @@ println("UW Homework: Simple Kotlin")
 fun whenFn(input: Any): String {
     when (input) {
         "Hello" -> return "world"
-        is String -> return "I don't understand"
+        is String -> return "Say what?"
         0 -> return "zero"
         1 -> return "one"
         in 2..10 -> return "low number"
@@ -53,6 +53,8 @@ class Money(var amount: Int, var currency: String) {
         when (currency) {
             "CAN" -> when(input) {
                 "USD" -> conversion = 12
+                "GBP" -> conversion = 5
+                "EUR" -> conversion = 15
             }
 
             "EUR" -> when(input) {
