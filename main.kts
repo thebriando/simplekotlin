@@ -3,14 +3,84 @@
 println("UW Homework: Simple Kotlin")
 
 // write a "whenFn" that takes an arg of type "Any" and returns a String
-
+fun whenFn(input: Any): String {
+    when (input) {
+        "Hello" -> return "world"
+        is String -> return "I don't understand"
+        0 -> return "zero"
+        1 -> return "one"
+        in 2..10 -> return "low number"
+        is Int -> return "a number"
+        else -> return "I don't understand"
+    }
+}
 // write an "add" function that takes two Ints, returns an Int, and adds the values
+fun add(num1: Int, num2: Int): Int {
+    return num1 + num2
+}
 // write a "sub" function that takes two Ints, returns an Int, and subtracts the values
-// write a "mathOp" function that takes two Ints and a function (that takes two Ints and returns an Int), returns an Int, and applies the passed-in-function to the arguments
-
+fun sub(num1: Int, num2: Int): Int {
+    return num1 - num2
+}
+// write a "mathOp" function that takes two Ints and a function (that takes two Ints and returns an Int), 
+// returns an Int, and applies the passed-in-function to the arguments
+fun mathOp(num1: Int, num2: Int, numf: (Int, Int) -> Int): Int {
+    return numf(num1, num2)
+}
 // write a class "Person" with first name, last name and age
+class Person(val firstName: String, val lastName: String, var age: Int) {
+    val debugString: String
+        get() = "[Person firstName:${firstName} lastName:${lastName} age:${age}]"
+
+    fun equals(other: Person): Boolean {
+        return this.hashCode() == other.hashCode()
+    }
+}
 
 // write a class "Money"
+class Money(var amount: Int, var currency: String) {
+    init {
+        if (amount < 0) {
+            throw Exception("Invalid amount")
+        }
+        if (currency != "USD" && currency != "EUR" && currency != "CAN" && currency != "GBP") {
+            throw Exception("Invalid currency")
+        }
+    }
+
+    fun convert(input: String): Money {
+        var conversion = 10
+        when (currency) {
+            "CAN" -> when(input) {
+                "USD" -> conversion = 12
+            }
+
+            "EUR" -> when(input) {
+                "GBP" -> conversion = 5
+                "USD" -> conversion = 10
+                "EUR" -> conversion = 15
+            }
+
+            "GBP" -> when(input) {
+                "GBP" -> conversion = 5
+                "USD" -> conversion = 10
+                "EUR" -> conversion = 15
+            }
+
+            "USD" -> when(input) {
+                "GBP" -> conversion = 5
+                "EUR" -> conversion = 15
+                "CAN" -> conversion = 15
+                "USD" -> conversion = 10
+            }
+        }
+        return Money(conversion, input)
+    }
+
+    operator fun plus(money: Money): Money {
+        return Money(money.convert(currency).amount + amount, currency)
+    }
+}
 
 // ============ DO NOT EDIT BELOW THIS LINE =============
 
